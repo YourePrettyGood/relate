@@ -101,7 +101,8 @@ int main(int argc, char* argv[]){
     }else{
     
       int N, L, num_sections;
-      FILE* fp = fopen(("parameters_c" + std::to_string(options["chunk_index"].as<int>()) + ".bin").c_str(), "r");
+      std::string file_out = options["output"].as<std::string>() + "/";
+      FILE* fp = fopen((file_out + "parameters_c" + std::to_string(options["chunk_index"].as<int>()) + ".bin").c_str(), "r");
       assert(fp != NULL);
       fread(&N, sizeof(int), 1, fp);
       fread(&L, sizeof(int), 1, fp);
