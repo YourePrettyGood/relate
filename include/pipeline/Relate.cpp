@@ -42,7 +42,8 @@ int main(int argc, char* argv[]){
     ("randomise", "(beta option) Randomise topology in post processing step.")
     ("i,input", "Filename of input.", cxxopts::value<std::string>())
 		("painting", "Optional. Copying and transition parameters in chromosome painting algorithm. Format: theta,rho. Default: 0.025,1.", cxxopts::value<std::string>())
-    ("seed", "Optional. Seed for MCMC in branch lengths estimation.", cxxopts::value<int>());
+    ("seed", "Optional. Seed for MCMC in branch lengths estimation.", cxxopts::value<int>())
+    ("no_cleanup", "Optional. Disable cleanup of temporary chunk directory during Finalize.");
 
   options.parse(argc, argv);
 

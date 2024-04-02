@@ -109,7 +109,9 @@ int Finalize(cxxopts::Options& options){
     std::string file_prefix = file_out + "chunk_" + std::to_string(c) + "/" + options["output"].as<std::string>();
 
     is.open(file_prefix + "_c" + std::to_string(c) + ".mut");
-    std::remove((file_prefix + "_c" + std::to_string(c) + ".mut").c_str());
+    if(!options.count("no_cleanup")){
+      std::remove((file_prefix + "_c" + std::to_string(c) + ".mut").c_str());
+    }
     if(is.fail()){
       std::cerr << "Error while opening file." << std::endl;
       exit(1);
@@ -224,7 +226,9 @@ int Finalize(cxxopts::Options& options){
     int position;
     AncesTree anc;
     anc.ReadBin(file_prefix + "_c" + std::to_string(c) + ".anc");  
-    std::remove((file_prefix + "_c" + std::to_string(c) + ".anc").c_str());
+    if(!options.count("no_cleanup")){
+      std::remove((file_prefix + "_c" + std::to_string(c) + ".anc").c_str());
+    }
 
     //first tree
     if(c == 0){      
@@ -278,16 +282,18 @@ int Finalize(cxxopts::Options& options){
   fclose(pfile);
 
   assert(num_trees == num_trees_cum);
-  std::remove((file_out + "parameters.bin").c_str());
-  std::remove((file_out + "props.bin").c_str());
+  if (!options.count("no_cleanup")){
+    std::remove((file_out + "parameters.bin").c_str());
+    std::remove((file_out + "props.bin").c_str());
 
-  filesys f;
-  for(int c = 0; c < num_chunks; c++){
-    //now delete directories
-    f.RmDir( (file_out + "chunk_" + std::to_string(c) + "/paint/").c_str() );
-    f.RmDir( (file_out + "chunk_" + std::to_string(c) + "/").c_str() );
+    filesys f;
+    for(int c = 0; c < num_chunks; c++){
+      //now delete directories
+      f.RmDir( (file_out + "chunk_" + std::to_string(c) + "/paint/").c_str() );
+      f.RmDir( (file_out + "chunk_" + std::to_string(c) + "/").c_str() );
+    }
+    f.RmDir( (file_out).c_str() );
   }
-  f.RmDir( (file_out).c_str() );
   
   /////////////////////////////////////////////
   //Resource Usage
