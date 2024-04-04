@@ -47,7 +47,7 @@ int FindEquivalentBranches(cxxopts::Options& options, int chunk_index){
  
   /////////////////////////////
   //delete painting and data binaries
-  if(!options.count("no_cleanup")){
+  if(0){ //Never executes, as it would break InferBranchLengths
     struct stat info;
     //check if directory exists
     if( stat( (file_out + "chunk_" + std::to_string(chunk_index) + "/paint/").c_str(), &info ) == 0 ){
