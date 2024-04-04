@@ -115,7 +115,7 @@ int Finalize(cxxopts::Options& options){
     if(is.fail()){
       std::cerr << "Error while opening file." << std::endl;
       exit(1);
-    }  
+    }
     getline(is,line);
 
     delta_chunk = section_boundary_end[c] - section_boundary_start[c];
@@ -225,13 +225,13 @@ int Finalize(cxxopts::Options& options){
 
     int position;
     AncesTree anc;
-    anc.ReadBin(file_prefix + "_c" + std::to_string(c) + ".anc");  
+    anc.ReadBin(file_prefix + "_c" + std::to_string(c) + ".anc");
     if(!options.count("no_cleanup")){
       std::remove((file_prefix + "_c" + std::to_string(c) + ".anc").c_str());
     }
 
     //first tree
-    if(c == 0){      
+    if(c == 0){
       (*anc.seq.begin()).pos = start_chunk;
       for(std::vector<Node>::iterator it_node = (*anc.seq.begin()).tree.nodes.begin(); it_node != (*anc.seq.begin()).tree.nodes.end(); it_node++){
         (*it_node).SNP_begin += start_chunk;
@@ -246,7 +246,7 @@ int Finalize(cxxopts::Options& options){
           it_anc = anc.seq.erase(it_anc);
         }else{
           break;
-        }        
+        }
       }
 
       (*anc.seq.begin()).pos = overlap_chunk_size + start_chunk;
@@ -268,7 +268,7 @@ int Finalize(cxxopts::Options& options){
         }
         num_trees++;
         it_anc++;
-      }else{ 
+      }else{
         it_anc = anc.seq.erase(it_anc);
       }
     }

@@ -58,7 +58,7 @@ int GetBranchLengths(cxxopts::Options& options, int chunk_index, int first_secti
   const std::string dirname = file_out + "chunk_" + std::to_string(chunk_index) + "/";
 
   //delete
-  if(1){
+  if(!options.count("no_cleanup")){
     struct stat info;
     //check if directory exists
     if( stat( (file_out + "chunk_" + std::to_string(chunk_index) + "/paint/").c_str(), &info ) == 0 ){
